@@ -175,4 +175,3 @@ LOGIN_REDIRECT_URL = "/"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL ='https'
 import django_heroku
 django_heroku.settings(locals())
-del DATABASES['default']['OPTIONS']['sslmode']
