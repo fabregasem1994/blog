@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import django_heroku
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -44,10 +46,12 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'whitenoise.runserver_nostatic',
 
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap'
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,7 +59,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'untitled.urls'
@@ -83,8 +86,9 @@ WSGI_APPLICATION = 'untitled.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 import dj_database_url
-
-DATABASES = { 'default' : dj_database_url.config()}
+DATABASES = {
+    'default': dj_database_url.config()
+}
 
 
 # Password validation
@@ -121,17 +125,14 @@ USE_TZ = True
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_URL = '/static_in_env/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static_in_env'),
-)
-
-# Extra places for collectstatic to find static files.
-
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_in_env')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+import django_heroku
+django_heroku.settings(locals())
 TINYMCE_DEFAULT_CONFIG = {
 
     'cleanup_on_startup': True,
@@ -173,5 +174,3 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = "/"
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL ='https'
-import django_heroku
-django_heroku.settings(locals())
