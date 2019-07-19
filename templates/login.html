@@ -1,3 +1,5 @@
+{% load socialaccount %}
+{% providers_media_js %}
 
 <html>
 <head>
@@ -64,8 +66,6 @@
 </style>
 </head>
 <body>
-{% load socialaccount %}
-{% providers_media_js %}
 
     <button  class="loginBtn loginBtn--facebook">
         <a href="{% provider_login_url "facebook" method="js_sdk" %}">Login with Facebook</a>

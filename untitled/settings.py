@@ -131,7 +131,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_in_env')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-import django_heroku
 django_heroku.settings(locals())
 TINYMCE_DEFAULT_CONFIG = {
 
@@ -170,7 +169,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # Application definition
-SITE_ID = 1
+SITE_ID = 3
 LOGIN_REDIRECT_URL = "/"
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL ='https'
